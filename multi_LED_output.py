@@ -31,6 +31,9 @@ def dot():
 def dash():
     flash_for_units(dash_pin, 1)
 
+def space_part():
+    wait_for_units(1)
+
 def space_letter():
     flash_for_units(letter_break_pin, 1)
 
@@ -42,20 +45,23 @@ def cleanup():
 
 def do_command(command):
     if command == morse.dot:
-        print '*'
+        print('*'),
         dot()
     elif command == morse.dash:
-        print '-'
+        print('-'),
         dash()
     elif command == morse.letter_break:
-        print ''
+        print(' '),
         space_letter()
+    elif command == morse.part_break:
+        space_part()
     elif command == morse.word_break:
-        print '\n'
+        print ''
         space_word()
 
 def transmit_string(string):
     morse_commands = morse.string_to_morse(string)
+    last = morse.part_break
     for command in morse_commands:
         do_command(command)
     cleanup()
