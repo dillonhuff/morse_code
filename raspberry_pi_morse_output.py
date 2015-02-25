@@ -1,4 +1,5 @@
 import RPi.GPIO as GPIO
+import string_to_morse as morse
 import time
 
 unit_length = 1
@@ -28,8 +29,28 @@ def space_part():
 def space_letter():
     wait_for_units(3)
 
-def space_words():
+def space_word():
     wait_for_units(7)
 
 def cleanup():
     GPIO.cleanup()
+
+def do_command(command):
+    if command == morse.dot:
+        dot()
+    elif command == morse.dash:
+        dash()
+    elif command == morse.part_break:
+        space_part()
+    elif command == morse.letter_break:
+        space_letter()
+    elif command == morse.word_break:
+        space_word()
+    else:
+        print 'ERROR: Unrecognized command ' + str(command)
+
+def transmit_string(string):
+    morse_commands = morse.string_to_morse(string)
+    for command in morse_commands:
+        do_command(command)
+    cleanup()
