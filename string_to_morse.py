@@ -43,8 +43,13 @@ def letter_to_morse(letter):
 def word_to_morse(word):
     word_code = []
     for letter in word:
-        word_code += letter_to_morse(letter)
-    return word_code
+        word_code += [letter_to_morse(letter)]
+    return list(chain(*intersperse([letter_break], word_code)))
 
 def string_to_morse(string):
-    return word_to_morse(string)
+    upper_string = string.upper()
+    words = upper_string.split()
+    morse_code = []
+    for word in words:
+        morse_code += [word_to_morse(word)]
+    return list(chain(*intersperse([word_break], morse_code)))
