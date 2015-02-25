@@ -36,8 +36,15 @@ letter_morse_codes = {'A' : [dot, dash],
 def intersperse(delimiter, seq):
     return islice(chain.from_iterable(izip(repeat(delimiter), seq)), 1, None)
 
-def letter_to_morse_code(letter):
+def letter_to_morse(letter):
     letter_code = letter_morse_codes[letter]
     return list(intersperse(part_break, letter_code))
 
-    
+def word_to_morse(word):
+    word_code = []
+    for letter in word:
+        word_code += letter_to_morse(letter)
+    return word_code
+
+def string_to_morse(string):
+    return word_to_morse(string)
